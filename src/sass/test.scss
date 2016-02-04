@@ -1,0 +1,41 @@
+
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #333;
+$radius: 30px;
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+        -ms-border-radius: $radius;
+            border-radius: $radius;
+}
+
+.height {
+    height: 200px;
+}
+
+body {
+    font: 100% $font-stack;
+    background-color: $primary-color;
+
+    div {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        @include border-radius($radius);
+    }
+
+    article[role="test"] {
+        @extend .height;
+        background-color: green;
+        width: 7/10 * 100%;
+    }
+
+    aside[role="essai"] {
+        @extend .height;
+        background-color: yellow;
+        width : 3/10 * 100%;
+    }
+
+}
+

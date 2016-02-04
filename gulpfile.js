@@ -61,18 +61,25 @@ gulp.task('uglify', function() {
             .pipe(gulp.dest('./build/'));
 });
 
+gulp.task('pre-cleanup', function() {
+    return deleteFiles('./build/css/all.css');
+});
+
 // dépend de "sass"
-gulp.task('concat_css', ['sass'], function() {
+gulp.task('concat_css', ['sass', 'pre-cleanup'], function() {
     return gulp.src('./build/css/*.css')
         .pipe(concat('all.css'))
         .pipe(gulp.dest('./build/css'));
 });
 
-gulp.task('clean', function() {
-    return gulp.src(['./build/css/*.css', '!./build/css/all.css',
-                    './build/compiled.js'])
-                .pipe(vinylPaths(del));
+gulp.task('clean', function(list) {
+    return deleteFiles(['./build/css/*.css', '!./build/css/all.css', './build/compiled.js']);
 });
+
+function deleteFiles(list) {
+    return gulp.src(list)
+                .pipe(vinylPaths(del));
+};
 
 gulp.task('build', ['jshint', 'sass', 'concat_css', 'browserify', 'minify_html'], function() {
     
